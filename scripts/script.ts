@@ -17,5 +17,9 @@ d3.json<JSON>("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceDa
   method: "GET"
 })
   .then((data: object) => {
-    
+    const xScale = d3.timeScale()
+      .domain([d3.min(data, d => {
+        console.log(d);
+      })])
   })
+;
