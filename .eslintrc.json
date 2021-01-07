@@ -36,6 +36,12 @@
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "prefer-const": "error",
+        "yoda": "error",
+        "space-before-function-paren": "off",
+        "no-undef": "warn",
+        "no-var": "error",
+        "newline-before-return": "off"
     }
 }
