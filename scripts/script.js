@@ -14,7 +14,7 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
     method: "GET"
 })
     .then(function (data) {
-    var xScale = d3.timeScale()
+    var xScale = d3.scaleTime()
         .domain([d3.min(data, function (d) {
             console.log(d);
         })]);
