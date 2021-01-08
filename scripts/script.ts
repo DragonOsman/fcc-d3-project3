@@ -10,12 +10,8 @@ d3.json<JSON>("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceDa
     const padding:number = 38;
     const rectWidth:number = 5;
     
-    const tooltip = d3.tip()
-      .attr("id", "tooltip")
-      .html(d => d)
-      .direction("n")
-      .offset([-10, 0])
-    ;
+    const tooltip = d3.select("#tooltip");
+    tooltip.style("opacity", 0);
 
     const container = d3.select("#svg-container")
       .append("svg")
@@ -23,7 +19,6 @@ d3.json<JSON>("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceDa
       .attr("height", svgHeight)
       .attr("x", 0)
       .attr("y", 0)
-      .call(tooltip)
     ;
     
     const xScale = d3.scaleBand()
