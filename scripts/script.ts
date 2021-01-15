@@ -20,7 +20,7 @@ d3.json<JSON>("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceDa
       .attr("id", "description")
       .html(
         `${data.monthlyVariance[0].year} - ${data.monthlyVariance[data.monthlyVariance.length - 1].year}: base temperature ${data.baseTemperature}&#8451;`
-        )
+      )
     ;
 
     const container = d3.select("main")
