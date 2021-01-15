@@ -18,7 +18,7 @@ body main > .container rect.cell:hover {
   stroke: #000;
 }
 body main > .container + .tooltip {
-  background-color: #463c46;
+  background-color: #464646;
   padding: 2px;
   border-radius: 10px;
   color: #fff;
