@@ -5,7 +5,7 @@ d3.json<JSON>("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceDa
   method: "GET"
 })
   .then((data: any) => {
-    const svgWidth:number = 900 * (data.monthlyVariance[8].month).toString().length;
+    const svgWidth:number = 900 * (data.monthlyVariance[8].year).toString().length + 5;
     const svgHeight:number = 500;
     const padding:number = 70;
 
@@ -36,12 +36,13 @@ d3.json<JSON>("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceDa
     const tooltip = d3.select("main")
       .append("div")
       .attr("id", "tooltip")
+      .attr("class", "tooltip")
       .style("opacity", 0)
     ;
     
     const xScale = d3.scaleBand()
       .domain(data.monthlyVariance.map(elem => elem.year))
-      .rangeRound([padding, svgWidth - padding / 2])
+      .range([padding, svgWidth - padding])
     ;
     const xAxis = d3.axisBottom(xScale)
       .tickValues(xScale.domain()
@@ -57,7 +58,7 @@ d3.json<JSON>("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceDa
 
     const yScale = d3.scaleBand()
       .domain([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
-      .rangeRound([svgHeight - padding, padding])
+      .range([svgHeight - padding, padding])
     ;
     const yAxis = d3.axisLeft(yScale)
       .tickValues(yScale.domain())
@@ -77,7 +78,7 @@ d3.json<JSON>("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceDa
       .attr("x", "400")
       .attr("y", "40")
       .text("Years")
-      .style("fill", "black")
+      .style("fill", "white")
     ;
 
     container.append("g")
@@ -89,8 +90,8 @@ d3.json<JSON>("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceDa
       .attr("x", "-50")
       .attr("y", "250")
       .text("Months")
-      .style("fill", "black")
-      .attr("transform", `translate(-310, ${padding + 100}) rotate(-90)`)
+      .style("fill", "white")
+      .attr("transform", `translate(-300, ${padding + 100}) rotate(-90)`)
     ;
 
     const colors = {
@@ -223,8 +224,8 @@ d3.json<JSON>("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceDa
     const legendHeight:number = 300 / legendColors.length;
 
     const tempVariance:number[] = data.monthlyVariance.map(elem => elem.variance);
-    const minTemp:any = data.baseTemperature + Math.min.apply(null, tempVariance);
-    const maxTemp:any = data.baseTemperature + Math.max.apply(null, tempVariance);
+    const minTemp:number = data.baseTemperature + Math.min.apply(null, tempVariance);
+    const maxTemp:number = data.baseTemperature + Math.max.apply(null, tempVariance);
 
     const legendThreshold = d3.scaleThreshold()
       .domain(((min: number, max: number, count:number):number[] => {
@@ -252,7 +253,7 @@ d3.json<JSON>("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceDa
 
     const legend = container.append("g")
       .attr("id", "legend")
-      .attr("transform", `translate(${padding + 140}, ${(svgHeight - padding)})`)
+      .attr("transform", `translate(${padding + (padding * 2)}, ${(svgHeight - padding)})`)
     ;
     legend.append("g")
       .selectAll("rect")
@@ -269,10 +270,10 @@ d3.json<JSON>("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceDa
       }))
       .enter()
       .append("rect")
-      .style("fill", d => legendThreshold(d[0]))
-      .attr("x", d => legendXScale(d[0]) + ((padding + padding + padding + 100)))
+      .style("fill", (d: any) => legendThreshold(d[0]))
+      .attr("x", (d: any) => legendXScale(d[0]) + ((padding + padding + padding + 100)))
       .attr("y", legendHeight - 1)
-      .attr("width", d => (legendXScale(d[1]) - legendXScale(d[0])) + 1)
+      .attr("width", (d: any) => (legendXScale(d[1]) - legendXScale(d[0])) + 1)
       .attr("height", legendHeight)
     ;
 
@@ -288,14 +289,40 @@ d3.json<JSON>("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceDa
       .enter()
       .append("rect")
       .attr("class", "cell")
-      .attr("data-month", d => d.month - 1)
-      .attr("data-year", d => d.year)
-      .attr("data-temp", d => data.baseTemperature + d.variance)
-      .attr("x", d => xScale(d.year))
-      .attr("y", d => (svgHeight - yScale(d.month - 1)) - padding)
-      .attr("width", d => xScale(d.year))
-      .attr("height", d => yScale(d.month - 1))
-      .style("fill", d => legendThreshold(data.baseTemperature + d.variance))
+      .attr("data-month", (d: any) => d.month - 1)
+      .attr("data-year", (d: any) => d.year)
+      .attr("data-temp", (d: any) => data.baseTemperature + d.variance)
+      .attr("x", (d: any) => xScale(d.year) + 1)
+      .attr("y", (d: any) => yScale(d.month - 1))
+      .attr("width", (d: any) => xScale.bandwidth(d.year))
+      .attr("height", (d: any) => yScale.bandwidth(d.month - 1))
+      .style("fill", (d: any) => legendThreshold(data.baseTemperature + d.variance))
+      .on("mouseover", (event: MouseEvent, d:any) => {
+        tooltip.transition()
+          .duration(200)
+          .style("opacity", 0.9)
+          .attr("height", "auto")
+          .attr("width", "100px")
+        ;
+
+        const date = new Date(d.year, d.month - 1);
+        tooltip.html(
+          `${d3.timeFormat("%Y - %B")(date)}
+          <br />${d3.format(".1f")(data.baseTemperature + d.variance)}&#8451;
+          <br />${d3.format(".1f")(d.variance)}&#8451;`
+        )
+          .style("left", `${event.pageX}px`)
+          .style("top", `${event.pageY - 28}px`)
+          .style("transform", "translateX(2px)")
+          .attr("data-year", d.year)
+        ;
+      })
+      .on("mouseout", () => {
+        tooltip.transition()
+          .duration(200)
+          .style("opacity", 0)
+        ;
+      })
     ;
   })
 ;

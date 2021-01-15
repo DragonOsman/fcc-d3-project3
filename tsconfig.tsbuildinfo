@@ -192,7 +192,7 @@
         "affectsGlobalScope": true
       },
       "./scripts/script.ts": {
-        "version": "c0d89974f295ff62f27f84e190895008e8f53013caf58c12efba22bb96c8625e",
+        "version": "83fa0541051a96370649c1b499b30350424d85037a01649488e44a2014948fb4",
         "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "affectsGlobalScope": true
       },
@@ -273,7 +273,7 @@
           },
           {
             "file": "./scripts/script.ts",
-            "start": 359,
+            "start": 362,
             "length": 2,
             "messageText": "Cannot find name 'd3'.",
             "category": 1,
@@ -281,7 +281,7 @@
           },
           {
             "file": "./scripts/script.ts",
-            "start": 495,
+            "start": 498,
             "length": 2,
             "messageText": "Cannot find name 'd3'.",
             "category": 1,
@@ -289,7 +289,7 @@
           },
           {
             "file": "./scripts/script.ts",
-            "start": 781,
+            "start": 784,
             "length": 2,
             "messageText": "Cannot find name 'd3'.",
             "category": 1,
@@ -297,7 +297,7 @@
           },
           {
             "file": "./scripts/script.ts",
-            "start": 1030,
+            "start": 1033,
             "length": 2,
             "messageText": "Cannot find name 'd3'.",
             "category": 1,
@@ -305,7 +305,7 @@
           },
           {
             "file": "./scripts/script.ts",
-            "start": 1161,
+            "start": 1197,
             "length": 2,
             "messageText": "Cannot find name 'd3'.",
             "category": 1,
@@ -313,7 +313,7 @@
           },
           {
             "file": "./scripts/script.ts",
-            "start": 1316,
+            "start": 1343,
             "length": 2,
             "messageText": "Cannot find name 'd3'.",
             "category": 1,
@@ -321,7 +321,7 @@
           },
           {
             "file": "./scripts/script.ts",
-            "start": 1594,
+            "start": 1621,
             "length": 2,
             "messageText": "Cannot find name 'd3'.",
             "category": 1,
@@ -329,7 +329,7 @@
           },
           {
             "file": "./scripts/script.ts",
-            "start": 1660,
+            "start": 1687,
             "length": 2,
             "messageText": "Cannot find name 'd3'.",
             "category": 1,
@@ -337,7 +337,7 @@
           },
           {
             "file": "./scripts/script.ts",
-            "start": 1807,
+            "start": 1829,
             "length": 2,
             "messageText": "Cannot find name 'd3'.",
             "category": 1,
@@ -345,7 +345,7 @@
           },
           {
             "file": "./scripts/script.ts",
-            "start": 1975,
+            "start": 1997,
             "length": 2,
             "messageText": "Cannot find name 'd3'.",
             "category": 1,
@@ -353,7 +353,7 @@
           },
           {
             "file": "./scripts/script.ts",
-            "start": 5981,
+            "start": 6009,
             "length": 2,
             "messageText": "Cannot find name 'd3'.",
             "category": 1,
@@ -361,7 +361,7 @@
           },
           {
             "file": "./scripts/script.ts",
-            "start": 6428,
+            "start": 6456,
             "length": 2,
             "messageText": "Cannot find name 'd3'.",
             "category": 1,
@@ -369,7 +369,7 @@
           },
           {
             "file": "./scripts/script.ts",
-            "start": 6562,
+            "start": 6590,
             "length": 2,
             "messageText": "Cannot find name 'd3'.",
             "category": 1,
@@ -377,7 +377,31 @@
           },
           {
             "file": "./scripts/script.ts",
-            "start": 6654,
+            "start": 6682,
+            "length": 2,
+            "messageText": "Cannot find name 'd3'.",
+            "category": 1,
+            "code": 2304
+          },
+          {
+            "file": "./scripts/script.ts",
+            "start": 8718,
+            "length": 2,
+            "messageText": "Cannot find name 'd3'.",
+            "category": 1,
+            "code": 2304
+          },
+          {
+            "file": "./scripts/script.ts",
+            "start": 8769,
+            "length": 2,
+            "messageText": "Cannot find name 'd3'.",
+            "category": 1,
+            "code": 2304
+          },
+          {
+            "file": "./scripts/script.ts",
+            "start": 8848,
             "length": 2,
             "messageText": "Cannot find name 'd3'.",
             "category": 1,

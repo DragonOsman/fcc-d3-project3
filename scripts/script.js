@@ -4,7 +4,7 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
     method: "GET"
 })
     .then((data) => {
-    const svgWidth = 900 * (data.monthlyVariance[8].month).toString().length;
+    const svgWidth = 900 * (data.monthlyVariance[8].year).toString().length + 5;
     const svgHeight = 500;
     const padding = 70;
     d3.select("main")
@@ -26,10 +26,11 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
     const tooltip = d3.select("main")
         .append("div")
         .attr("id", "tooltip")
+        .attr("class", "tooltip")
         .style("opacity", 0);
     const xScale = d3.scaleBand()
         .domain(data.monthlyVariance.map(elem => elem.year))
-        .rangeRound([padding, svgWidth - padding / 2]);
+        .range([padding, svgWidth - padding]);
     const xAxis = d3.axisBottom(xScale)
         .tickValues(xScale.domain()
         .filter(year => {
@@ -42,7 +43,7 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
     });
     const yScale = d3.scaleBand()
         .domain([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
-        .rangeRound([svgHeight - padding, padding]);
+        .range([svgHeight - padding, padding]);
     const yAxis = d3.axisLeft(yScale)
         .tickValues(yScale.domain())
         .tickFormat(month => {
@@ -59,7 +60,7 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
         .attr("x", "400")
         .attr("y", "40")
         .text("Years")
-        .style("fill", "black");
+        .style("fill", "white");
     container.append("g")
         .attr("transform", `translate(${padding}, 0)`)
         .attr("id", "y-axis")
@@ -69,8 +70,8 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
         .attr("x", "-50")
         .attr("y", "250")
         .text("Months")
-        .style("fill", "black")
-        .attr("transform", `translate(-310, ${padding + 100}) rotate(-90)`);
+        .style("fill", "white")
+        .attr("transform", `translate(-300, ${padding + 100}) rotate(-90)`);
     const colors = {
         RdYlBu: {
             3: ["#fc8d59", "#ffffbf", "#91bfdb"],
@@ -220,7 +221,7 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
         .tickFormat(d3.format(".1f"));
     const legend = container.append("g")
         .attr("id", "legend")
-        .attr("transform", `translate(${padding + 140}, ${(svgHeight - padding)})`);
+        .attr("transform", `translate(${padding + (padding * 2)}, ${(svgHeight - padding)})`);
     legend.append("g")
         .selectAll("rect")
         .data(legendThreshold.range().map(color => {
@@ -235,10 +236,10 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
     }))
         .enter()
         .append("rect")
-        .style("fill", d => legendThreshold(d[0]))
-        .attr("x", d => legendXScale(d[0]) + ((padding + padding + padding + 100)))
+        .style("fill", (d) => legendThreshold(d[0]))
+        .attr("x", (d) => legendXScale(d[0]) + ((padding + padding + padding + 100)))
         .attr("y", legendHeight - 1)
-        .attr("width", d => (legendXScale(d[1]) - legendXScale(d[0])) + 1)
+        .attr("width", (d) => (legendXScale(d[1]) - legendXScale(d[0])) + 1)
         .attr("height", legendHeight);
     legend
         .append("g")
@@ -250,12 +251,32 @@ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
         .enter()
         .append("rect")
         .attr("class", "cell")
-        .attr("data-month", d => d.month - 1)
-        .attr("data-year", d => d.year)
-        .attr("data-temp", d => data.baseTemperature + d.variance)
-        .attr("x", d => xScale(d.year))
-        .attr("y", d => (svgHeight - yScale(d.month - 1)) - padding)
-        .attr("width", d => xScale(d.year))
-        .attr("height", d => yScale(d.month - 1))
-        .style("fill", d => legendThreshold(data.baseTemperature + d.variance));
+        .attr("data-month", (d) => d.month - 1)
+        .attr("data-year", (d) => d.year)
+        .attr("data-temp", (d) => data.baseTemperature + d.variance)
+        .attr("x", (d) => xScale(d.year) + 1)
+        .attr("y", (d) => yScale(d.month - 1))
+        .attr("width", (d) => xScale.bandwidth(d.year))
+        .attr("height", (d) => yScale.bandwidth(d.month - 1))
+        .style("fill", (d) => legendThreshold(data.baseTemperature + d.variance))
+        .on("mouseover", (event, d) => {
+        tooltip.transition()
+            .duration(200)
+            .style("opacity", 0.9)
+            .attr("height", "auto")
+            .attr("width", "100px");
+        const date = new Date(d.year, d.month - 1);
+        tooltip.html(`${d3.timeFormat("%Y - %B")(date)}
+          <br />${d3.format(".1f")(data.baseTemperature + d.variance)}&#8451;
+          <br />${d3.format(".1f")(d.variance)}&#8451;`)
+            .style("left", `${event.pageX}px`)
+            .style("top", `${event.pageY - 28}px`)
+            .style("transform", "translateX(2px)")
+            .attr("data-year", d.year);
+    })
+        .on("mouseout", () => {
+        tooltip.transition()
+            .duration(200)
+            .style("opacity", 0);
+    });
 });

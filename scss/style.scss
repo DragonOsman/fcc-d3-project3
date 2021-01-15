@@ -1,0 +1,30 @@
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: center;
+
+  & main {
+    position: relative;
+
+    & > .container {
+      border-radius: 20px;
+      background-color: #778899;
+      padding-bottom: 5px;
+      justify-content: center;
+      transform: translateX(-3.5px);
+  
+      & rect.cell:hover {
+        stroke: #000;
+      }
+  
+      & + .tooltip {
+        background-color: rgba(70, 60, 70, 255);
+        padding: 2px;
+        border-radius: 10px;
+        color: #fff;
+        position: absolute;
+      }
+    }
+  }
+}
