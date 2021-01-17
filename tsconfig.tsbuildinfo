@@ -216,7 +216,7 @@
         "lib.dom.d.ts"
       ],
       "module": 0,
-      "allowJs": true,
+      "downlevelIteration": true,
       "configFilePath": "./tsconfig.json"
     },
     "semanticDiagnosticsPerFile": [
